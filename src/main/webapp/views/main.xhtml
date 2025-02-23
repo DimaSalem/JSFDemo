@@ -1,0 +1,170 @@
+   <!DOCTYPE html>
+   <html xmlns="http://www.w3.org/1999/xhtml"
+         xmlns:h="http://xmlns.jcp.org/jsf/html"
+         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+         xmlns:f="http://xmlns.jcp.org/jsf/core"
+         xmlns:p="http://primefaces.org/ui">
+
+   <h:head>
+      <title>JSF PrimeFaces Page</title>
+      <style>
+         .table-container {
+            /*display: flex;*/
+            /*justify-content: space-between;*/
+            gap: 20px;
+            margin: 20px;
+         }
+         .table-box {
+            /*flex: 1;*/
+            min-width: 45%;
+         }
+      </style>
+   </h:head>
+
+   <h:body>
+
+
+      <h:form id="mainForm">
+         <div style="display: flex; align-items: center; justify-content: space-between;">
+            <!-- Centered Heading -->
+            <h1 style="text-align: center; margin-bottom: 20px;">Welcome to My PrimeFaces Page</h1>
+            <p:commandButton value="Add" icon="pi pi-plus" process="@this" action="#{mainBean.addAuthorAndArticle()}"  />
+
+         </div>
+
+
+         <div class="table-container">
+
+            <!-- Authors Table -->
+            <div class="table-box">
+
+               <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <!-- Centered Heading -->
+                  <h2>Authors</h2>
+                  <p:commandButton value="Add"  process="@this" update="dlgAuthor" icon="pi pi-plus"  actionListener="#{mainBean.clearAuthor()}"/>
+               </div>
+               <p:dialog id="dlgAuthor" widgetVar="dlgAuthor" width="350" height="250" modal="true" header="Author Information" showEffect="fade" hideEffect="fade" style="padding: 10px;">
+                     <h:panelGrid columns="2" style="margin-bottom: 10px;">
+                        <h:outputLabel for="authorId" value="Id:" />
+                        <h:inputText id="authorId" value="#{mainBean.author.id}" required="true" readonly="#{mainBean.isEdit()}" requiredMessage="Author ID is required" style="width: 100%;"/>
+
+                        <h:outputLabel for="authorFirstName" value="First Name:" />
+                        <h:inputText id="authorFirstName" value="#{mainBean.author.firstName}" required="true" requiredMessage="First Name is required" style="width: 100%;"/>
+
+                        <h:outputLabel for="authorLastName" value="Last Name:" />
+                        <h:inputText id="authorLastName" value="#{mainBean.author.lastName}" required="true" requiredMessage="Last Name is required" style="width: 100%;"/>
+
+                        <h:outputLabel for="authorAge" value="Age:" />
+                        <h:inputText id="authorAge" value="#{mainBean.author.age}" required="true" requiredMessage="Age is required" style="width: 100%;"/>
+                     </h:panelGrid>
+
+                     <p:commandButton value="Save" update="authorsTable" process="@this dlgAuthor" action="#{mainBean.saveAuthor()}" style="margin-top: 10px;" />
+
+                  <p:messages>
+                     <p:autoUpdate/>
+                  </p:messages>
+               </p:dialog>
+
+               <p:dataTable id="authorsTable" var="author" value="#{mainBean.authors}" selectionMode="single"
+                            selection="#{mainBean.author}" style="width: 100%;" rowKey="#{author.id}">
+                  <p:ajax event="rowSelect" listener="#{mainBean.onAuthorSelect}" update="@form:articlesTable" />
+
+                  <p:column headerText="Author Id">
+                     <h:outputText value="#{author.id}" />
+                  </p:column>
+                  <p:column headerText="Author Name">
+                     <h:outputText value="#{author.firstName} #{author.lastName}" />
+                  </p:column>
+                  <p:column headerText="Age">
+                     <h:outputText value="#{author.age}" />
+                  </p:column>
+                  <p:column headerText="Actions" >
+
+                     <p:commandButton value="Edit"  process="@this" update="mainForm:dlgAuthor" icon="pi pi-pencil"  actionListener="#{mainBean.showEditAuthor}" style="margin: 3px">
+                        <f:setPropertyActionListener value="#{author}" target="#{mainBean.author}"/>
+                     </p:commandButton>
+
+                     <p:commandButton value="Delete"  process="@this" update="mainForm:authorsTable" icon="pi pi-trash"  action="#{mainBean.deleteAuthor()}" style="margin: 3px">
+                        <f:setPropertyActionListener value="#{author}" target="#{mainBean.author}"/>
+                     </p:commandButton>
+                  </p:column>
+               </p:dataTable>
+
+            </div>
+
+
+
+            <!-- Articles Table -->
+            <div class="table-box">
+
+               <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <!-- Centered Heading -->
+                  <h2>Articles</h2>
+                  <p:commandButton value="Add"  process="@this" update="dlgArticle" icon="pi pi-plus"  actionListener="#{mainBean.clearArticle()}"/>
+               </div>
+
+               <p:dialog id="dlgArticle" widgetVar="dlgArticle" width="350" height="250" modal="true" header="Article Information" showEffect="fade" hideEffect="fade" style="padding: 10px;">
+                  <h:panelGrid columns="2" style="margin-bottom: 10px;">
+                     <h:outputLabel for="articleId" value="Id:" />
+                     <h:inputText id="articleId" value="#{mainBean.article.id}" required="true" readonly="#{mainBean.isEdit()}"/>
+
+                     <h:outputLabel for="articleTitle" value="Title:" />
+                     <h:inputText id="articleTitle" value="#{mainBean.article.title}" required="true">
+                        <f:validateRequired />
+                     </h:inputText>
+
+                     <h:outputLabel for="articleDescription" value="Description:" />
+                     <h:inputText id="articleDescription" value="#{mainBean.article.description}" required="true">
+                        <f:validateRequired />
+                     </h:inputText>
+
+                     <h:outputLabel for="option" value="Author:" />
+                     <p:selectOneMenu id="option" value="#{mainBean.authorId}" required="true" disabled="#{mainBean.isEdit()}">
+                        <f:validateRequired />
+                        <f:selectItem itemLabel="" itemValue="" />
+                        <f:selectItems value="#{mainBean.authors}" var="author"
+                                       itemLabel="#{author.firstName} #{author.lastName}" itemValue="#{author.id}" />
+                     </p:selectOneMenu>
+                  </h:panelGrid>
+
+                  <p:commandButton value="Save" update="articlesTable" process="@this dlgArticle" action="#{mainBean.saveArticle()}" style="margin-top: 10px;" />
+
+                  <p:messages>
+                     <p:autoUpdate />
+                  </p:messages>
+               </p:dialog>
+
+
+
+               <p:dataTable id="articlesTable" var="article" value="#{mainBean.articles}" style="width: 100%;">
+                  <p:column headerText="Id">
+                     <h:outputText value="#{article.id}" />
+                  </p:column>
+                  <p:column headerText="Title">
+                     <h:outputText value="#{article.title}" />
+                  </p:column>
+                  <p:column headerText="Description">
+                     <h:outputText value="#{article.description}" />
+                  </p:column>
+                  <p:column headerText="Author Id">
+                     <h:outputText value="#{article.author.id}" />
+                  </p:column>
+                  <p:column headerText="Actions" >
+
+                     <p:commandButton value="Edit"  process="@this" update="mainForm:dlgArticle" icon="pi pi-pencil"  actionListener="#{mainBean.showEditArticle()}" style="margin: 3px">
+                        <f:setPropertyActionListener value="#{article}" target="#{mainBean.article}"/>
+                     </p:commandButton>
+
+                     <p:commandButton value="Delete"  process="@this" update="mainForm:articlesTable" icon="pi pi-trash"  action="#{mainBean.deleteArticle()}" style="margin: 3px">
+                        <f:setPropertyActionListener value="#{article}" target="#{mainBean.article}"/>
+                     </p:commandButton>
+                  </p:column>
+               </p:dataTable>
+
+            </div>
+         </div>
+
+      </h:form>
+   </h:body>
+
+   </html>

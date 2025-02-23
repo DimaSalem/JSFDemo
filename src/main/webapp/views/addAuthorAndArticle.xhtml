@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:head>
+        <title>Add Author</title>
+    </h:head>
+
+    <h:body>
+
+        <p:messages>
+            <p:autoUpdate/>
+        </p:messages>
+
+        <h:form>
+            <h:outputText value="Enter Author Information" />
+
+            <h:panelGrid columns="2">
+                <h:outputLabel for="authorId" value="Id:" />
+                <h:inputText id="authorId" value="#{mainBean.author.id}" required="true" requiredMessage="Author ID is required" />
+
+                <h:outputLabel for="authorFirstName" value="First Name:" />
+                <h:inputText id="authorFirstName" value="#{mainBean.author.firstName}" required="true" requiredMessage="First Name is required" />
+
+                <h:outputLabel for="authorLastName" value="Last Name:" />
+                <h:inputText id="authorLastName" value="#{mainBean.author.lastName}" required="true" requiredMessage="Last Name is required" />
+
+                <h:outputLabel for="authorAge" value="Age:" />
+                <h:inputText id="authorAge" value="#{mainBean.author.age}" required="true" requiredMessage="Age is required" />
+            </h:panelGrid>
+
+            <br/><br/>
+
+            <h:outputText value="Enter Article Information" />
+
+            <h:panelGrid columns="2">
+                <h:outputLabel for="articleId" value="Id:" />
+                <h:inputText id="articleId" value="#{mainBean.article.id}" required="true" requiredMessage="Article ID is required" />
+
+                <h:outputLabel for="articleTitle" value="Title:" />
+                <h:inputText id="articleTitle" value="#{mainBean.article.title}" required="true" requiredMessage="Title is required" />
+
+                <h:outputLabel for="articleDescription" value="Description:" />
+                <h:inputText id="articleDescription" value="#{mainBean.article.description}" required="true" requiredMessage="Description is required" />
+            </h:panelGrid>
+
+            <h:commandButton value="Save" action="#{mainBean.saveAuthorAndArticle()}"/>
+        </h:form>
+    </h:body>
+</f:view>
+</html>
