@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Sign Up</title>
+</h:head>
+<h:body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+    <p:card style="width: 400px; text-align: left; padding: 20px;">
+        <f:facet name="title">
+            Sign Up
+        </f:facet>
+
+        <h:form enctype="multipart/form-data">
+
+            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                <div style="flex: 1;">
+                    <p:outputLabel for="username" value="Username:" style="display: block; text-align: left;"/>
+                    <p:inputText id="username" required="true" placeholder="Username" style="width: 100%;" value="#{signUpBean.user.username}"/>
+                </div>
+
+                <div style="flex: 1;">
+                    <p:outputLabel for="firstName" value="First Name:" style="display: block; text-align: left;"/>
+                    <p:inputText id="firstName" required="true" placeholder="First Name" style="width: 100%;"  value="#{signUpBean.user.firstName}"/>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;">
+                <div style="flex: 1;">
+                    <p:outputLabel for="middleName" value="Middle Name:" style="display: block; text-align: left;"/>
+                    <p:inputText id="middleName" required="true" placeholder="Middle Name" style="width: 100%;" value="#{signUpBean.user.middleName}"/>
+                </div>
+
+                <div style="flex: 1;">
+                    <p:outputLabel for="lastName" value="Last Name:" style="display: block; text-align: left;"/>
+                    <p:inputText id="lastName" required="true" placeholder="Last Name" style="width: 100%;" value="#{signUpBean.user.lastName}"/>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;">
+                <div style="flex: 1;">
+                    <p:outputLabel for="date" value="Date Of Birth:" style="display: block; text-align: left;"/>
+                    <p:datePicker id="date" required="true"  style="width: 100%;" value="#{signUpBean.user.birthdate}"
+                                   pattern="yyyy-MM-dd"/>
+                </div>
+
+                <div style="flex: 1;">
+
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;">
+                <div style="flex: 1;">
+                        <p:fileUpload value="#{signUpBean.file}" mode="simple" skinSimple="false" accept="image/*"/>
+                </div>
+
+                <div style="flex: 1;">
+
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;">
+                <div style="flex: 1;">
+                    <p:outputLabel for="password" value="Password:" style="display: block; text-align: left;"/>
+                    <p:inputText id="password" required="true" type="password" placeholder="Password" style="width: 100%;" value="#{signUpBean.user.password}"/>
+                </div>
+                <div style="flex: 1;">
+                    <p:outputLabel for="confirmPassword" value="Confirm Password:" style="display: block; text-align: left;"/>
+                    <p:inputText id="confirmPassword" required="true" type="password" placeholder="Confirm Password" style="width: 100%;" value="#{signUpBean.confirmPassword}"/>
+                </div>
+            </div>
+            <br/>
+
+            <p:messages>
+                <p:autoUpdate />
+            </p:messages>
+
+            <p:commandButton value="Sign Up" style="margin-top: 15px; width: 100%;" action="#{signUpBean.signUp()}" process="@form" />
+
+            <br/>
+            <h:outputText value="Already have an account? "/>
+            <p:commandLink value="signIn" action="#{signUpBean.signIn()}" process="@this"/>
+
+        </h:form>
+
+    </p:card>
+</h:body>
+</html>

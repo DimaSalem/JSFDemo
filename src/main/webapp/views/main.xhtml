@@ -121,7 +121,7 @@
                      <h:outputLabel for="option" value="Author:" />
                      <p:selectOneMenu id="option" value="#{mainBean.authorId}" required="true" disabled="#{mainBean.isEdit()}">
                         <f:validateRequired />
-                        <f:selectItem itemLabel="" itemValue="" />
+                        <f:selectItem itemLabel="#{mainBean.article.author.firstName} #{mainBean.article.author.lastName}" itemValue="#{mainBean.article.author.id}" />
                         <f:selectItems value="#{mainBean.authors}" var="author"
                                        itemLabel="#{author.firstName} #{author.lastName}" itemValue="#{author.id}" />
                      </p:selectOneMenu>

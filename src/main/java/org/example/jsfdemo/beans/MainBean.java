@@ -66,7 +66,6 @@ public class MainBean implements Serializable {
             authorService.addAuthor(author);
             authors.add(author);
 //            setAuthors(authorService.getAuthors());
-            PrimeFaces.current().executeScript("PF('dlgAuthor').hide();");
         }
     }
     public void saveAuthor() {
@@ -74,6 +73,7 @@ public class MainBean implements Serializable {
             saveEditAuthor();
         else
             saveAddAuthor();
+        PrimeFaces.current().executeScript("PF('dlgAuthor').hide();");
     }
     public void showEditAuthor(){
         isEdit = true;
@@ -85,7 +85,6 @@ public class MainBean implements Serializable {
             authors.remove(author);
             authors.add(author);
 //            setAuthors(authorService.getAuthors());
-            PrimeFaces.current().executeScript("PF('dlgAuthor').hide();");
         }
     }
     public void deleteAuthor() {
@@ -111,7 +110,6 @@ public class MainBean implements Serializable {
             articleService.addArticle(article);
             articles.add(article);
 //            setArticles(articleService.getArticles());
-//            PrimeFaces.current().executeScript("PF('dlgArticle').hide();");
         }
     }
     public void saveArticle() {
@@ -127,12 +125,11 @@ public class MainBean implements Serializable {
         PrimeFaces.current().executeScript("PF('dlgArticle').show();");
     }
     public void saveEditArticle(){
-        if ((article != null && authorId != null && article.getId() != null)) {
+        if ((article != null && article.getId() != null)) {
             articleService.updateArticle(article);
             articles.remove(article);
             articles.add(article);
 //            setAuthors(authorService.getAuthors());
-//            PrimeFaces.current().executeScript("PF('dlgArticle').hide();");
         }
     }
     public void deleteArticle() {

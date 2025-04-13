@@ -26,6 +26,7 @@ public class Author {
     @OneToMany (mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Article> articles = new ArrayList<>();
 
+
     public Integer getId() {
         return id;
     }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Dashboard</title>
+</h:head>
+
+<h:body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
+    <h:form>
+        <p:panelGrid columns="2" style="width: 100%; height: 100vh; display: flex; justify-content: space-between; gap: 10px;">
+
+            <!-- Sidebar -->
+            <p:panel style="background-color: #2c3e50; color: white; width: 250px; padding: 20px; height: 100vh; flex: 1;">
+                <div style="text-align: center;">
+                    <h:graphicImage value="../imgs/#{signInBean.user.attach.fileName}"
+                                    style="width: 150px; height: auto; margin-bottom: 10px;"/>
+                    <h3 style="margin: 10px 0;">Welcome, #{signInBean.user.username}</h3>
+                </div>
+
+                <p:menu style="background-color: transparent; border: none;">
+                    <p:menuitem value="Authors" icon="pi pi-users" action="#{navigationBean.goToAuthors}" />
+                    <p:menuitem value="Articles" icon="pi pi-file" action="#{navigationBean.goToArticles}" />
+                    <p:menuitem value="Logout" icon="pi pi-sign-out"  action="#{navigationBean.logout()}"/>
+                </p:menu>
+            </p:panel>
+
+            <!-- Main Content (Dynamically Loaded) -->
+            <p:panel style="padding: 20px; width: 100%; flex: 1;">
+                <ui:include src="#{navigationBean.currentPage}" />
+            </p:panel>
+
+        </p:panelGrid>
+    </h:form>
+</h:body>
+</html>

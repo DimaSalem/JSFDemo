@@ -31,9 +31,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void updateAuthor(Author author) {
         if(author.getId() != null) {
-//            Article managedAuthor = entityManager.merge(article);
-            entityManager.persist(author);
-
+            entityManager.merge(author);
         }
     }
 

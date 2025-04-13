@@ -32,8 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void updateArticle(Article article) {
         if(article.getId() != null) {
-//            Article managedAuthor = entityManager.merge(article);
-            entityManager.persist(article);
+            entityManager.merge(article);
         }
     }
 

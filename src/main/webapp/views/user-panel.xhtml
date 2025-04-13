@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+   <title>User Panel</title>
+
+</h:head>
+
+<h:body>
+   <h:form id="myForm" enctype="multipart/form-data">
+      <div style="display: flex; justify-content: space-between;">
+         <h2>User Panel</h2>
+         <p:commandButton value="Logout" action="#{signInBean.logout()}"/>
+      </div>
+
+      <div class="card">
+      <p:dashboard model="#{userPanelBean.model}" responsive="true">
+         <p:panel id="userDashboard" widgetVar="userDashboard" >
+            <!-- Dashboard Panel -->
+            <p:panel id="userPanel" header="User Dashboard"  style="width: 100vw !important; padding: 20px; border-radius: 10px;" >
+               <h2 style="text-align: center; color: #007bff;">Welcome, #{signInBean.user.firstName}!</h2>
+
+               <p:panelGrid columns="2" style="width: 100%;" columnClasses="label-column, value-column">
+                  <p:outputLabel value="Username:" style="font-weight: bold; color: #333;" />
+                  <h:outputText value="#{signInBean.user.username}" />
+
+                  <p:outputLabel value="First Name:" style="font-weight: bold; color: #333;" />
+                  <h:outputText value="#{signInBean.user.firstName}" />
+
+                  <p:outputLabel value="Last Name:" style="font-weight: bold; color: #333;" />
+                  <h:outputText value="#{signInBean.user.lastName}" />
+
+                  <p:outputLabel value="Age:" style="font-weight: bold; color: #333;" />
+                  <h:outputText value="#{signInBean.user.age}" />
+
+                  <p:outputLabel for="img" value="Profile Image" style="font-weight: bold; color: #333;" />
+                     <p:graphicImage id="img" value="../imgs/#{signInBean.user.attach.getFileName()}"
+                                     style="display: block; margin-left: auto; margin-right: auto; width: 100px; height: auto;"
+                                     alt="Profile Image"/>
+
+               </p:panelGrid>
+            </p:panel>
+            <div style="display: flex; justify-content: flex-start;">
+               <p:fileUpload value="#{signInBean.file}" mode="simple" skinSimple="false" accept="image/*"/>
+               <p:commandButton value="Save" action="#{signInBean.updateUser()}" update="myForm img"/>
+            </div>
+
+
+         </p:panel>
+
+
+
+
+         <p:panel  id="users" header="Users" widgetVar="users" style="width: 100vw !important;">
+            <div style="display: flex !important;">
+               <p:repeat value="#{userPanelBean.users}" var="user">
+                  <p:card style="width: 300px; margin: 10px; text-align: center; padding: 20px;   border: 2px solid gray;">
+                     <!-- Profile Image -->
+                     <p:graphicImage value="../imgs/#{user.attach.fileName}" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 15px;" />
+
+                     <h3>#{user.username}</h3>
+                     <p><strong>First Name:</strong> #{user.firstName}</p>
+                     <p><strong>Last Name:</strong> #{user.lastName}</p>
+                     <p><strong>Age:</strong> #{user.age} years</p>
+                  </p:card>
+               </p:repeat>
+            </div>
+         </p:panel>
+
+
+      </p:dashboard>
+      </div>
+   </h:form>
+</h:body>
+</html>
